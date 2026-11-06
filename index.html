@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpyTrack Analytics | Spyware & Keylogger Intelligence Suite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">👁️</div>
+                <div>
+                    <h1>SpyTrack <span>v2.0 PRO</span></h1>
+                    <p>Real-Time Spyware Activity & Keylogger Intelligence Suite</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-box">
+                    <span class="label">SYSTEM STATE</span>
+                    <span class="value critical" id="systemStateText">THREAT ELEVATED</span>
+                </div>
+                <button class="btn-report" onclick="exportAuditReport()">📥 Export Audit Report</button>
+            </div>
+        </header>
+
+        <!-- Main Layout Grid -->
+        <div class="grid-layout">
+            
+            <!-- Column 1: Attack Simulations -->
+            <div class="left-col">
+                
+                <!-- Keylogger Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⌨️ 1. Keylogger & Keystroke Monitor</h3>
+                        <span class="badge badge-danger">Live Intercept</span>
+                    </div>
+                    <p class="description">Whatever you type in the input box below will be captured in real-time by the background keylogging payload:</p>
+                    
+                    <div class="input-group">
+                        <label>Victim Input Field (Type here):</label>
+                        <input type="text" id="userInput" placeholder="Type password, credit card, or sensitive messages..." oninput="trackKeystrokes()">
+                    </div>
+
+                    <div class="log-box">
+                        <div class="log-box-header">
+                            <span class="title">>_ Captured Keystrokes Log (Attacker View)</span>
+                            <span class="meta">Length: <b id="keyCount">0</b> | Latency: <b id="latency">2ms</b></span>
+                        </div>
+                        <div id="capturedData" class="captured-text">Captured data will appear here...</div>
+                    </div>
+                </div>
+
+                <!-- Clipboard Hijacker Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📋 2. Clipboard Hijacker Simulator</h3>
+                        <span class="badge badge-warning">Memory Monitor</span>
+                    </div>
+                    <p class="description">Data copied to the system clipboard (Ctrl+C) is immediately sniffed by the spyware:</p>
+                    
+                    <div class="input-group">
+                        <label>Copy Test Area:</label>
+                        <div class="copy-box-wrap">
+                            <input type="text" id="clipInput" value="CryptoWallet: 0x71C7656EC7ab88b098defB751B7401B5f6d8976F">
+                            <button onclick="copyToClipboard()">Copy Text</button>
+                        </div>
+                    </div>
+
+                    <div class="log-box">
+                        <div class="log-box-header">
+                            <span class="title">Intercepted Clipboard Content:</span>
+                        </div>
+                        <div id="clipLog" class="captured-text warning-text">Standing by... No data copied yet.</div>
+                    </div>
+                </div>
+
+                <!-- Surveillance Hijack Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📹 3. Webcam & Screen Surveillance</h3>
+                        <span class="badge badge-danger" id="camBadge">CAPTURING</span>
+                    </div>
+                    <div class="surveillance-preview">
+                        <div class="camera-feed">
+                            <div class="rec-dot"></div>
+                            <span>LIVE STREAM: WEBCAM_DEV_01</span>
+                            <div class="feed-grid"></div>
+                        </div>
+                        <div class="surveillance-info">
+                            <p>Status: <b class="danger-text">UNAUTHORIZED ACCESS</b></p>
+                            <p>FPS: <b>30.0</b> | Bandwidth: <b>1.2 Mbps</b></p>
+                            <p>Target: <b>Front Camera / Desktop Screen</b></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Column 2: Logs & Controls -->
+            <div class="right-col">
+                
+                <!-- Exfiltration Metrics -->
+                <div class="card metrics-card">
+                    <div class="metric">
+                        <span class="m-title">Data Stolen</span>
+                        <span class="m-value danger-text" id="stolenMetrics">0.00 KB</span>
+                    </div>
+                    <div class="metric">
+                        <span class="m-title">Data Blocked</span>
+                        <span class="m-value success-text" id="blockedMetrics">0.00 KB</span>
+                    </div>
+                    <div class="metric">
+                        <span class="m-title">Active Threats</span>
+                        <span class="m-value warning-text" id="activeThreats">3</span>
+                    </div>
+                </div>
+
+                <!-- Telemetry Stream Card -->
+                <div class="card flex-card">
+                    <div class="card-header">
+                        <h3>📡 4. Spyware Telemetry Stream</h3>
+                        <span class="badge badge-success">LIVE FEED</span>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <button class="btn-filter active" onclick="filterLogs('ALL')">ALL</button>
+                        <button class="btn-filter" onclick="filterLogs('ALERT')">ALERTS</button>
+                        <button class="btn-filter" onclick="filterLogs('EXFILTRATION')">EXFILTRATION</button>
+                        <button class="btn-filter" onclick="filterLogs('PRIVACY')">PRIVACY</button>
+                        <button class="btn-filter btn-pause" id="pauseBtn" onclick="togglePauseFeed()">Pause Feed</button>
+                    </div>
+
+                    <div class="telemetry-box" id="telemetryFeed">
+                        <!-- Telemetry logs will populate dynamically -->
+                    </div>
+                </div>
+
+                <!-- Defense Controls -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🛡️ 5. Defense & Mitigation Controls</h3>
+                        <div class="risk-score-badge">
+                            <span>VULNERABILITY INDEX: </span>
+                            <b id="riskScore">85</b>/100
+                        </div>
+                    </div>
+                    
+                    <div class="controls-list">
+                        <div class="control-item">
+                            <div>
+                                <h4>Anti-Keylogger Encryption</h4>
+                                <p>Encrypts keystrokes in real-time to neutralize keyloggers</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggleKeyEncrypt" onchange="updateSecuritySettings()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="control-item">
+                            <div>
+                                <h4>Cam / Mic Hardware Lock</h4>
+                                <p>Blocks unauthorized webcam and microphone access</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggleCamLock" onchange="updateSecuritySettings()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="control-item">
+                            <div>
+                                <h4>Isolate Exfiltration Network</h4>
+                                <p>Cuts off communication with the attacker's remote C2 server</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggleNetIso" onchange="updateSecuritySettings()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
